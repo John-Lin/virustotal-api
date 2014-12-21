@@ -545,7 +545,7 @@ class PrivateApi(PublicApi):
 
         return _return_response_and_status_code(response)
 
-    def get_url_report(self, this_url, scan=1, allinfo=1):
+    def get_url_report(self, this_url, scan='1', allinfo=1):
         """ Get the scan results for a URL.
 
         :param this_url: A URL for which you want to retrieve the most recent report. You may also specify a scan_id
@@ -562,10 +562,10 @@ class PrivateApi(PublicApi):
         :return: JSON response
         """
         # TODO - Confirm that it is resource and not url
-        params = {'apikey': self.api_key, 'resource': this_url, 'allinfo': allinfo}
+        params = {'apikey': self.api_key, 'resource': this_url, 'allinfo': allinfo, 'scan': scan}
 
         try:
-            response = requests.get(self.base + 'url/report', params=params, proxies=self.proxies)
+            response = requests.post(self.base + 'url/report', params=params, proxies=self.proxies)
         except requests.RequestException as e:
             return dict(error=e.message)
 
